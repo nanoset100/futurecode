@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>미래코드당 · 정치를 코딩하라, 미래를 리부트하라</title>
+<meta name="description" content="우리는 정치인을 바꾸자고 말하지 않습니다. 정치의 운영체제를 다시 짭니다. 당신의 지역을, 당신 손으로." />
+<!-- 오픈그래프 (공유 시 미리보기) -->
+<meta property="og:title" content="정치를 코딩하라. 미래를 리부트하라." />
+<meta property="og:description" content="지지자를 모으지 않습니다. 당신의 지역을 운영할 동료를 찾습니다." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<style>
+  :root{
+    --bg:#0a0e17; --bg2:#0f1626; --line:#1e2a44;
+    --ink:#eef2fb; --muted:#9fb0cc; --dim:#6b7c9e;
+    --accent:#4f8cff; --accent2:#39e0a8; --warn:#ffd166;
+    --max:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Pretendard',system-ui,-apple-system,sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'SFMono-Regular',Consolas,'Roboto Mono',monospace}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+  section{padding:96px 0;border-bottom:1px solid var(--line)}
+  .eyebrow{
+    font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent2);font-weight:600;margin-bottom:18px
+  }
+  h1{font-size:clamp(34px,7vw,60px);line-height:1.18;font-weight:800;letter-spacing:-.02em}
+  h2{font-size:clamp(26px,5vw,40px);line-height:1.25;font-weight:800;letter-spacing:-.02em;margin-bottom:24px}
+  h3{font-size:20px;font-weight:700;margin-bottom:8px}
+  p.lead{font-size:clamp(17px,2.4vw,20px);color:var(--muted)}
+  .accent{color:var(--accent)}
+  .accent2{color:var(--accent2)}
+  .big{font-size:clamp(20px,3.4vw,28px);font-weight:700;line-height:1.5}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:120px 0 90px;border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(1100px 500px at 70% -10%, rgba(79,140,255,.18), transparent 60%),
+      radial-gradient(800px 400px at 0% 110%, rgba(57,224,168,.10), transparent 60%);
+  }
+  .hero .seq{font-size:clamp(18px,3vw,23px);color:var(--muted);margin:6px 0;font-weight:500}
+  .hero .seq b{color:var(--ink);font-weight:700}
+  .hero .punch{margin-top:26px;font-size:clamp(28px,6vw,52px);font-weight:800;line-height:1.2;letter-spacing:-.02em}
+  .hero .punch .x{color:var(--warn)}
+  .slogan{
+    display:inline-block;margin-top:34px;padding:10px 18px;border:1px solid var(--line);
+    border-radius:999px;color:var(--accent2);font-weight:700;font-size:15px;
+    background:rgba(57,224,168,.06)
+  }
+  .scrollhint{margin-top:46px;color:var(--dim);font-size:13px;letter-spacing:.1em}
+
+  /* generic blocks */
+  .stack > * + *{margin-top:22px}
+  .quote{
+    border-left:3px solid var(--accent);padding:6px 0 6px 20px;
+    color:var(--ink);font-weight:700;font-size:clamp(19px,3vw,24px);line-height:1.5
+  }
+  .cards{display:grid;gap:14px;margin-top:30px}
+  @media(min-width:620px){.cards{grid-template-columns:1fr 1fr}}
+  .card{
+    background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:22px
+  }
+  .card .k{font-size:13px;color:var(--accent2);font-weight:700;letter-spacing:.08em;margin-bottom:10px}
+  .card p{color:var(--muted);font-size:15.5px}
+
+  /* generation row */
+  .gen{display:grid;gap:10px;margin-top:26px}
+  .gen .row{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-bottom:1px dashed var(--line)}
+  .gen .age{flex:0 0 64px;font-weight:800;color:var(--accent);font-size:17px}
+  .gen .job{color:var(--muted);font-size:15.5px}
+  .gen .job b{color:var(--ink)}
+
+  /* founder */
+  .founder{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:28px}
+  .founder p{color:var(--muted);font-size:16.5px}
+  .founder p + p{margin-top:16px}
+  .founder .sig{margin-top:20px;color:var(--ink);font-weight:700}
+
+  /* CTA */
+  .ctaSec{
+    background:
+      radial-gradient(700px 360px at 50% 0%, rgba(79,140,255,.16), transparent 60%);
+    text-align:center
+  }
+  .form{display:flex;gap:10px;max-width:460px;margin:26px auto 0;flex-wrap:wrap;justify-content:center}
+  .form input{
+    flex:1 1 240px;min-width:0;background:#0c1322;border:1px solid var(--line);
+    color:var(--ink);padding:15px 16px;border-radius:12px;font-size:16px;font-family:inherit
+  }
+  .form input::placeholder{color:var(--dim)}
+  .btn{
+    background:var(--accent);color:#04101f;border:0;border-radius:12px;
+    padding:15px 24px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;
+    transition:transform .08s ease, background .2s ease;white-space:nowrap
+  }
+  .btn:hover{background:#6aa0ff;transform:translateY(-1px)}
+  .btnghost{display:inline-block;margin-top:16px;color:var(--accent2);font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
+  .btnghost:hover{border-color:var(--accent2)}
+  .micro{color:var(--dim);font-size:13px;margin-top:16px}
+
+  /* honest milestone */
+  .mile{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:8px}
+  .mile .step{font-weight:800;color:var(--ink)}
+  .mile .arrow{color:var(--dim)}
+
+  footer{padding:54px 0;color:var(--dim);font-size:13.5px;text-align:center}
+  footer a{color:var(--muted);text-decoration:none}
+  .note{color:var(--dim);font-size:13px;margin-top:10px}
+</style>
+</head>
+<body>
+
+<!-- ========== 1. HERO : 시스템이 아니라 사람의 일상으로 시작 ========== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">FUTURE CODE</div>
+    <p class="seq">매일 아침 당신은 일어나 <b>일하고</b>,</p>
+    <p class="seq">아이를 <b>키우고</b>, 부모를 <b>걱정합니다</b>.</p>
+    <p class="seq">그동안 국회는 <b>싸웁니다</b>.</p>
+    <p class="seq">4년에 한 번, 당신은 한 표를 던집니다.</p>
+    <div class="punch">그리고 그 표는 — <span class="x">사라집니다.</span></div>
+    <div class="slogan mono">// 정치를 코딩하라. 미래를 리부트하라.</div>
+    <div class="scrollhint mono">↓ 왜 늘 똑같은지, 이야기해 드리겠습니다</div>
+  </div>
+</header>
+
+<!-- ========== 2. 문제 재정의 : 나쁜 정치인 X / 낡은 시스템 O ========== -->
+<section>
+  <div class="wrap stack">
+    <div class="eyebrow">진짜 문제</div>
+    <h2>문제는 ‘나쁜 정치인’이 아닙니다.</h2>
+    <p class="lead">우리는 4년마다 사람을 바꿔봤습니다. 진보도, 보수도, 새 인물도.
+      그런데 당신의 삶은 왜 그대로일까요?</p>
+    <p class="quote">고장 난 건 사람이 아니라 <span class="accent">시스템</span>입니다.<br/>
+      1980년대에 설계된 운영체제로, 2026년을 통치하고 있으니까요.</p>
+    <p class="lead">정치는 멈췄고, 사회는 더 빨라졌습니다.
+      국가의 의사결정은 여전히 “회의”와 “합의”라는 느린 절차에 묶여 있고,
+      정책은 ‘계획’이 아니라 ‘홍보 문장’이 되었습니다.
+      그 사이, 당신의 집값·일자리·아이의 미래는 아무도 책임지지 않습니다.</p>
+  </div>
+</section>
+
+<!-- ========== 3. 비전 번역 : 온톨로지가 아니라 "당신에게 무엇이 달라지나" ========== -->
+<section>
+  <div class="wrap stack">
+    <div class="eyebrow">우리가 다르게 하는 것</div>
+    <h2>그래서 우리는<br/>정치인을 바꾸자고 말하지 않습니다.</h2>
+    <p class="big">우리는 정치의 <span class="accent">운영체제(OS)</span>를 다시 짭니다.</p>
+    <p class="lead">어려운 말 같지만, 당신에게는 이렇게 바뀝니다 👇</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="k">투명 — 말이 아니라 기록</div>
+        <h3>“그 의원이 한 말과 한 일”</h3>
+        <p>공약했는지, 표결에서 어떻게 눌렀는지, 예산을 어디 썼는지 —
+          당신이 직접 확인합니다. 사람은 거짓말해도, 기록(log)은 거짓말하지 않으니까요.</p>
+      </div>
+      <div class="card">
+        <div class="k">참여 — 소음이 아니라 데이터</div>
+        <h3>“당신의 목소리가 사라지지 않습니다”</h3>
+        <p>여론조사는 민심의 요약일 뿐입니다. 우리는 시민의 참여를
+          구조화된 데이터로 쌓아, 누구도 무시할 수 없는 ‘민심의 지도’로 만듭니다.</p>
+      </div>
+      <div class="card">
+        <div class="k">책임 — 주인이 생긴다</div>
+        <h3>“당신의 지역구를, 누가 책임집니다”</h3>
+        <p>지금 당신의 선거구는 4년에 한 번만 누군가의 것입니다.
+          우리는 매일 그 지역을 들여다보는 ‘담당자(Operator)’를 세웁니다.</p>
+      </div>
+      <div class="card">
+        <div class="k">포용 — 누구나 읽는 정치</div>
+        <h3>“복잡한 법을 사람의 언어로”</h3>
+        <p>정치가 어려운 건 당신 탓이 아닙니다. 일부러 불투명하게 쓰였기 때문입니다.
+          우리는 모든 정책을 누구나 읽고, 참여하고, 수정할 수 있게 엽니다.</p>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:28px">시민은 더 이상 <b>청중</b>이 아닙니다.
+      정치 시스템의 <span class="accent2">공동 설계자(Operator)</span>입니다.</p>
+  </div>
+</section>
+
+<!-- ========== 4. 전 세대 연합 : "청년만의 싸움이 아니다" ========== -->
+<section>
+  <div class="wrap stack">
+    <div class="eyebrow">한 세대가 아니라, 전 세대</div>
+    <h2>이건 청년만의 싸움이 아닙니다.</h2>
+    <p class="lead">우리는 한 세대의 승리가 아니라,
+      전 세대가 협동해 국가의 OS를 리부트하는 <b>연합</b>을 만듭니다.
+      각 세대에겐 고유한 임무가 있습니다.</p>
+    <div class="gen">
+      <div class="row"><div class="age">20대</div><div class="job"><b>탐색·실험</b> — 현장 데이터, 팩트체크, 디지털 캠페인, 베타테스트</div></div>
+      <div class="row"><div class="age">30대</div><div class="job"><b>빌더·주역</b> — 지역 오너십, 정책 작성, 프로젝트 리드, 커뮤니티 운영</div></div>
+      <div class="row"><div class="age">40대</div><div class="job"><b>브릿지</b> — 실행을 제도로 연결, 협업 조율, 지역 네트워크 확장, 멘토링</div></div>
+      <div class="row"><div class="age">50대</div><div class="job"><b>감별·리스크</b> — 정책 현실성 검증, 예산·법·행정 리뷰, 공정성 점검</div></div>
+      <div class="row"><div class="age">60대</div><div class="job"><b>지혜·중재</b> — 역사·지역 맥락, 갈등 중재, 공동체 신뢰, 다음 세대 격려</div></div>
+      <div class="row"><div class="age">70대</div><div class="job"><b>가치 수호</b> — 인간 존엄과 공공선, 장기 관점, 세대 연대의 상징(‘지지’가 아니라 ‘동행’)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 5. 창업자의 '왜' : 사람·진정성 (※ 본인 이야기로 교체) ========== -->
+<section>
+  <div class="wrap stack">
+    <div class="eyebrow">제가 이걸 시작한 이유</div>
+    <div class="founder">
+      <!-- ▼▼▼ 여기는 '당신의 진짜 이야기'로 바꾸세요. 아래는 초안입니다. ▼▼▼ -->
+      <p>저는 개발자입니다. 몇 년 동안 앱을 만들었습니다.
+        버그를 찾고, 고장 난 걸 고치고, 더 잘 작동하게 다시 설계하는 일이 제 일이었습니다.</p>
+      <p>그러다 어느 날 깨달았습니다. 우리나라에서 가장 크게 고장 났는데,
+        아무도 ‘리부트’하지 않는 시스템 — 그게 <b>정치</b>라는 걸요.
+        저는 앱의 버그는 밤새 고치면서, 나라의 버그는 4년에 한 번 한숨만 쉬고 있었습니다.</p>
+      <p>화려한 연설도, 정치 경력도 저에겐 없습니다.
+        하지만 저는 ‘고장 난 구조를 다시 설계하는 법’을 압니다.
+        그리고 그 일은 혼자서는 불가능하다는 것도 압니다.
+        그래서 동료를 찾습니다. 똑똑한 소수가 아니라, <b>각자 자기 자리에서 진짜 삶을 살아온 시민들</b>을요.</p>
+      <!-- ▲▲▲ 위 3단락을 본인의 실제 이야기/계기로 교체 ▲▲▲ -->
+      <div class="sig mono">— 미래코드당 준비위원회</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 6. 핵심 CTA : 내지역은 내가 책임진다 ========== -->
+<section class="ctaSec" id="join">
+  <div class="wrap stack">
+    <div class="eyebrow">핵심 제안</div>
+    <h2>당신의 선거구는,<br/>지금 누가 책임지고 있습니까?</h2>
+    <p class="lead">미래코드당은 지지자를 모으지 않습니다.
+      당신의 지역을 운영할 <span class="accent2">동료(Operator)</span>를 찾습니다.</p>
+
+    <div class="cards" style="text-align:left">
+      <div class="card"><div class="k">하는 일</div>
+        <p>① 우리 지역 현안·정책 정리 &nbsp; ② 새 정책 제안 &nbsp; ③ 지역 국회의원 활동 기록·평가</p></div>
+      <div class="card"><div class="k">공개 원칙</div>
+        <p>활동은 연 2회 점수로 공개됩니다. 상위 활동자는 당내 후보자 트랙(교육·검증·추천)에서 우선 고려됩니다.</p></div>
+    </div>
+
+    <!-- 이메일 수집 폼: action 을 Stibee/Google Form/Formspree 주소로 교체 -->
+    <form class="form" action="#" method="POST" onsubmit="alert('연결 예정: 이 폼을 Stibee/구글폼/Formspree에 연결하세요'); return false;">
+      <input type="email" name="email" placeholder="이메일을 남겨주세요" required />
+      <button class="btn" type="submit">함께하기</button>
+    </form>
+    <a class="btnghost" href="#join">“내 지역은 내가 책임진다” — 지금 신청하기 →</a>
+    <p class="micro">이메일 외 정보는 받지 않습니다. 알고리즘이 아니라, 당신과 직접 연결되기 위해서입니다.</p>
+  </div>
+</section>
+
+<!-- ========== 7. 정직한 현재 위치 : 운동 → 정당 ========== -->
+<section>
+  <div class="wrap stack" style="text-align:center">
+    <div class="eyebrow">우리가 지금 어디에 있는가</div>
+    <p class="big">지금 우리는 정당이 아닙니다.<br/><span class="accent">정당이 될 수 있는 사람들</span>을 모으는 중입니다.</p>
+    <div class="mile mono">
+      <span class="step">지금: 사람 모으기</span><span class="arrow">→</span>
+      <span class="step accent2">100명</span><span class="arrow">→</span>
+      <span class="step">앱·조직 가동</span><span class="arrow">→</span>
+      <span class="step accent">2028</span>
+    </div>
+    <p class="note">과장하지 않겠습니다. 이건 거대한 산입니다.
+      그래서 더더욱, 한 명 한 명이 필요합니다. 그 한 명이 당신이면 좋겠습니다.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="mono">정치를 코딩하라. 미래를 리부트하라.</div>
+    <p class="note">미래코드당(준비) · 시민·시스템·직접민주주의 플랫폼<br/>
+      문의: <a href="mailto:hello@example.com">hello@example.com</a> · 인스타그램 · 유튜브</p>
+    <p class="note" style="margin-top:14px;opacity:.7">
+      ※ 이 운동은 특정 종교·교회와 무관한 시민 운동입니다. 누구나 한 사람의 시민으로 참여합니다.</p>
+  </div>
+</footer>
+
+</body>
+</html>
