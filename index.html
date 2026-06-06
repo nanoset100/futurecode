@@ -245,11 +245,16 @@
         <p>활동은 연 2회 점수로 공개됩니다. 상위 활동자는 당내 후보자 트랙(교육·검증·추천)에서 우선 고려됩니다.</p></div>
     </div>
 
-    <!-- 이메일 수집 폼: action 을 Stibee/Google Form/Formspree 주소로 교체 -->
-    <form class="form" action="#" method="POST" onsubmit="alert('연결 예정: 이 폼을 Stibee/구글폼/Formspree에 연결하세요'); return false;">
+    <!-- 이메일 수집 폼
+         ▼ 연결 방법: 아래 action="..." 의 YOUR_FORM_ID 를
+            Formspree 주소(예: https://formspree.io/f/abcdwxyz)로 바꾸면 끝.
+            (formspree.io 무료 가입 → New form → 엔드포인트 복사) -->
+    <form id="joinForm" class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
       <input type="email" name="email" placeholder="이메일을 남겨주세요" required />
+      <input type="hidden" name="_subject" value="[미래코드당] 새 참여 신청" />
       <button class="btn" type="submit">함께하기</button>
     </form>
+    <p id="joinMsg" class="micro" style="display:none"></p>
     <a class="btnghost" href="#join">“내 지역은 내가 책임진다” — 지금 신청하기 →</a>
     <p class="micro">이메일 외 정보는 받지 않습니다. 알고리즘이 아니라, 당신과 직접 연결되기 위해서입니다.</p>
   </div>
@@ -280,6 +285,44 @@
       ※ 이 운동은 특정 종교·교회와 무관한 시민 운동입니다. 누구나 한 사람의 시민으로 참여합니다.</p>
   </div>
 </footer>
+
+<script>
+  // 이메일 폼 — 페이지 이동 없이 전송하고 안내 메시지 표시
+  (function () {
+    var f = document.getElementById('joinForm');
+    var msg = document.getElementById('joinMsg');
+    if (!f) return;
+    function show(t, ok) {
+      msg.textContent = t;
+      msg.style.display = 'block';
+      msg.style.color = ok ? '#39e0a8' : '#ffd166';
+    }
+    f.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var action = f.getAttribute('action') || '';
+      if (action.indexOf('YOUR_FORM_ID') !== -1) {
+        show('⚠️ 폼이 아직 연결되지 않았습니다. (Formspree 주소를 넣어주세요)', false);
+        return;
+      }
+      show('전송 중…', true);
+      try {
+        var res = await fetch(action, {
+          method: 'POST',
+          body: new FormData(f),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          f.style.display = 'none';
+          show('✅ 함께해 주셔서 감사합니다. 곧 연락드리겠습니다.', true);
+        } else {
+          show('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.', false);
+        }
+      } catch (err) {
+        show('네트워크 오류입니다. 다시 시도해 주세요.', false);
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
